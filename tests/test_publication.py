@@ -4,7 +4,7 @@ import tempfile
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from prepare_publication import prepare
+from prepare_publication import prepare, normalize_source_row
 
 
 def report(status="complete", extra=""):
@@ -62,6 +62,22 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(len(result["edition_digest"]), 64)
         changed = self.prepare_text(report(extra=table + "\nRevised analyst interpretation."))
         self.assertNotEqual(result["edition_digest"], changed["edition_digest"])
+
+    def test_limited_access_overrides_negative_full_text_mentions(self):
+        for access in ["Headline and public summary only; full article unavailable.", "Full article unavailable.", "Full text was not available.", "Abstract only; full text not reviewed."]:
+            with self.subTest(access=access):
+                row = f"| [FT](https://example.com/ft) | October 23 | 09:28 EDT | {access} |"
+                result = normalize_source_row(row)
+                self.assertIn("Headline or excerpt only.", result)
+                self.assertNotIn("Full text reviewed.", result)
+
+    def test_positive_source_access_and_integrated_register(self):
+        row = "| [CNBC](https://example.com/cnbc) | October 23 | 09:28 EDT | Full article; financing. |"
+        self.assertIn("Full text reviewed.", normalize_source_row(row))
+        limited = "| [FT](https://example.com/ft) | October 23 | 09:28 EDT | Headline and public summary only; full article unavailable. |"
+        result = self.prepare_text(report(extra="\n### Source register\n\n" + limited))
+        self.assertIn("Headline or excerpt only.", result["content"])
+        self.assertNotIn("Full text reviewed.", result["content"])
 
 
 if __name__ == "__main__":

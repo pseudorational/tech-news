@@ -71,10 +71,13 @@ def normalize_source_row(line: str) -> str:
     if len(columns) != 4:
         raise ValueError("Source register must have four columns")
     access = columns[3].lower()
-    if "full article" in access or "full subscriber" in access or "full text" in access or "full recap" in access:
-        columns[3] = "Full text reviewed."
-    elif "excerpt" in access or "headline" in access or "snippet" in access:
+    # Limited-access notes often say "full article unavailable". Evaluate those
+    # before positive full-text markers so a denial cannot become an access claim.
+    limited = re.search(r"\b(?:headline|excerpt|snippet|abstract)\b|not full|full (?:article|text).{0,30}(?:unavailable|not (?:available|reviewed|access))", access)
+    if limited:
         columns[3] = "Headline or excerpt only."
+    elif "full article" in access or "full subscriber" in access or "full text" in access or "full recap" in access:
+        columns[3] = "Full text reviewed."
     elif "primary" in access:
         columns[3] = "Primary disclosure reviewed."
     else:
