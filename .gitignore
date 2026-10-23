@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+publication-packet.json
+.publication_state/
+CORE_REPORTING_PROMPT.md
+access_retest_*.md
+run_log_*.md
+

@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<div class="report-heading shell">
+  <a class="back-link" href="{{ '/#archive' | relative_url }}">← All editions</a>
+  <p class="eyebrow">THE DAILY ANALYST REPORT</p>
+  <h1>{{ page.title | escape }}</h1>
+  <div class="report-meta"><time datetime="{{ page.report_date | date: '%Y-%m-%d' }}">{{ page.report_date | date: '%B %-d, %Y' }}</time><span class="badge">{% if page.status == 'complete_with_gaps' %}Coverage limits disclosed{% else %}Verified edition{% endif %}</span></div>
+  <p class="report-cutoff">News cutoff: {{ page.news_cutoff | escape }} · Completed market session: {{ page.market_session | date: '%Y-%m-%d' }}</p>
+  {% if page.edition_note %}<p class="report-cutoff">{{ page.edition_note | escape }}{% if page.source_rechecked_at %} Source recheck: {{ page.source_rechecked_at | escape }}.{% endif %}</p>{% endif %}
+  <div class="report-actions"><a href="https://github.com/pseudorational/tech-news/blob/main/reports/{{ page.report_date | date: '%Y-%m-%d' }}.md">View Markdown <span aria-hidden="true">↗</span></a><a href="#source-register">Sources ↓</a></div>
+</div>
+<div class="shell article-shell"><article class="report-body">{{ content }}</article></div>
+

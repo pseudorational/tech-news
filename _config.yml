@@ -1,0 +1,17 @@
+title: Technology Brief
+description: AI-assisted technology industry analysis with primary evidence and linked sources.
+url: https://pseudorational.github.io
+baseurl: /tech-news
+timezone: America/New_York
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+exclude:
+  - README.md
+  - scripts
+  - tests
+  - publication-packet.json
+  - __pycache__
+  - .gitignore
+

@@ -1,0 +1,13 @@
+---
+layout: default
+title: Daily technology industry analysis
+---
+{% assign reports = site.pages | where: 'is_report', true | sort: 'report_date' | reverse %}
+{% assign latest = reports | first %}
+<section class="hero shell">
+  <div class="hero-copy"><p class="eyebrow">TECHNOLOGY / INDUSTRY / MARKETS</p><h1>What changed.<br>Why it matters.</h1><p class="lede">A daily view of the technology industry, connecting the news to business performance, capital, and risk.</p><p class="cadence"><span class="status-dot" aria-hidden="true"></span>Daily research · Eastern time · Sources in every edition</p></div>
+  {% if latest %}<a class="latest-card" href="{{ latest.url | relative_url }}"><span class="card-kicker">LATEST EDITION <span aria-hidden="true">↗</span></span><time datetime="{{ latest.report_date | date: '%Y-%m-%d' }}">{{ latest.report_date | date: '%B %-d' }}</time><h2>Technology Industry<br>Analyst Report</h2><p>Markets, earnings, industry fundamentals, and the signals to watch next.</p><span class="card-bottom">Read the report <span aria-hidden="true">→</span></span></a>{% else %}<div class="latest-card"><p class="card-kicker">FIRST EDITION</p><h2>Research is on its way.</h2><p>The first validated report will appear here.</p></div>{% endif %}
+</section>
+<section class="principles shell" aria-label="Reporting approach"><div><span class="principle-number">01</span><h2>Evidence first</h2><p>Primary disclosures and reputable reporting, with direct links.</p></div><div><span class="principle-number">02</span><h2>A financial lens</h2><p>Revenue, margins, cash flow, financing, and competitive position.</p></div><div><span class="principle-number">03</span><h2>Clear limits</h2><p>Dates, missing inputs, and analyst judgments made explicit.</p></div></section>
+<section class="archive shell" id="archive"><div class="section-title"><div><p class="eyebrow">THE READING ROOM</p><h2>Report archive</h2></div><span>{{ reports.size }} {% if reports.size == 1 %}edition{% else %}editions{% endif %}</span></div><div class="edition-list">{% for report in reports %}<a class="edition" href="{{ report.url | relative_url }}"><time datetime="{{ report.report_date | date: '%Y-%m-%d' }}"><span>{{ report.report_date | date: '%b' }}</span><strong>{{ report.report_date | date: '%d' }}</strong></time><div><h3>{{ report.title | escape }}</h3><p>{{ report.report_date | date: '%A, %Y' }} · {% if report.status == 'complete_with_gaps' %}Coverage limits disclosed{% else %}Verified edition{% endif %}</p></div><span class="edition-arrow" aria-hidden="true">→</span></a>{% endfor %}</div></section>
+

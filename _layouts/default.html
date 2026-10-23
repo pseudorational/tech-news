@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title | escape }} · {% endif %}{{ site.title | escape }}</title>
+  <meta name="description" content="{{ page.description | default: site.description | escape }}">
+  <meta name="color-scheme" content="light">
+  {% if page.edition_digest %}<meta name="report-digest" content="{{ page.edition_digest | escape }}">{% endif %}
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="shell header-inner">
+      <a class="brand" href="{{ '/' | relative_url }}" aria-label="Technology Brief home"><span class="brand-mark">TB</span><span>Technology Brief</span></a>
+      <nav aria-label="Main navigation"><a href="{{ '/' | relative_url }}">Latest</a><a href="{{ '/#archive' | relative_url }}">Archive</a><a href="https://github.com/pseudorational/tech-news">GitHub <span aria-hidden="true">↗</span></a></nav>
+    </div>
+  </header>
+  <main id="main">{{ content }}</main>
+  <footer class="site-footer shell"><p>AI-assisted research. Sources linked. Interpretation identified.</p><p>For information and discussion; reports describe their data cutoff and coverage limits.</p></footer>
+</body>
+</html>
+
